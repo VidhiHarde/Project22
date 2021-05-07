@@ -19,11 +19,13 @@ function preload()
 function setup() {
 	createCanvas(800, 750);
 
-	// fairyVoice.play();
+	fairyVoice.play();
 
 	fairy = createSprite(130, 520);
 	fairy.addAnimation("fairyflying",fairyImg);  
 	fairy.scale =0.25;
+	//fairy.debug=true
+	fairy.setCollider("rectangle",0,0,1000,20)
 
 	star = createSprite(650,30);
 	star.addImage(starImg);
@@ -32,9 +34,9 @@ function setup() {
 	engine = Engine.create();
 	world = engine.world;
 
-	starBody = Bodies.circle(650 , 30 , 5 , {restitution:0.5, isStatic:true});
+	starBody = Bodies.circle(650 , 30 , 5 , {restitution:0.1, isStatic:true});
 	World.add(world, starBody);
-	
+
 	Engine.run(engine);
 
 }
@@ -43,6 +45,10 @@ function setup() {
 function draw() {
   background(bgImg);
 
+if(star.isTouching(fairy)){
+	star.velocityY=0
+}
+
   drawSprites();
 
 }
@@ -50,11 +56,11 @@ function draw() {
 function keyPressed() {
 	//write code here
 	if(keyCode===LEFT_ARROW){
-		fairy.x=fairy.x-10;
+		fairy.x=fairy.x-20;
 	}
 
 	if(keyCode===RIGHT_ARROW){
-		fairy.x=fairy.x+10;
+		fairy.x=fairy.x+20;
 	}
 
 	if(keyCode===DOWN_ARROW){
